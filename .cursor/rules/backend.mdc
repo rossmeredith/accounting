@@ -1,0 +1,29 @@
+---
+description: Django Ninja API and pytest conventions for the backend
+globs: backend/**/*
+alwaysApply: false
+---
+
+# Backend (Django Ninja)
+
+## API
+
+- Use **Django Ninja** with Pydantic `Schema` types for request/response.
+- Mount on `path("api/", api.urls)` — routes omit the `/api` prefix in Ninja (e.g. `@api.get("/health")`).
+- OpenAPI lives at `/api/docs`.
+
+## Settings
+
+- Runtime: `config.settings` (PostgreSQL from `POSTGRES_*` env, defaults match `docker-compose.yml`).
+- Tests: `config.settings_test` (in-memory SQLite) via `pytest.ini`.
+
+## Tests
+
+- Location: `backend/tests/`.
+- `pytest.ini` sets `--disable-socket`; outbound network must fail unless `@pytest.mark.allow_hosts(...)`.
+- Use `@pytest.mark.django_db` when hitting the DB; use Django test `client` for HTTP.
+
+## Dependencies
+
+- App deps: `backend/requirements.txt`
+- Dev/test: `backend/requirements-dev.txt` (includes pytest, pytest-django, pytest-socket)

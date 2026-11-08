@@ -1,0 +1,28 @@
+---
+description: React, TypeScript, and Mantine conventions for the frontend
+globs: frontend/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Frontend (Vite + React + TypeScript)
+
+## UI
+
+- **Mantine** for components; global styles via `@mantine/core/styles.css` and `MantineProvider` in `main.tsx`.
+- PostCSS: `postcss-preset-mantine` in `postcss.config.cjs`.
+
+## Data & types
+
+- Shared API types in `frontend/src/types/`.
+- HTTP helpers in `frontend/src/api/`; use `fetch` with typed JSON responses.
+- Dev proxy: Vite forwards `/api` → Django (`vite.config.ts`).
+
+## E2E
+
+- Playwright specs in `frontend/e2e/`; `baseURL` `http://127.0.0.1:5173`.
+- Prefer role/text locators (`getByRole`, `getByText`).
+
+## Scripts
+
+- `npm run dev --prefix frontend` · `npm run build --prefix frontend`
+- Headless E2E: `npm run test:e2e --prefix frontend` (UI: `test:e2e:ui` or `just test-e2e`)

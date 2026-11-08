@@ -1,0 +1,30 @@
+---
+description: Accounting monorepo layout, just commands, and cross-cutting conventions
+alwaysApply: true
+---
+
+# Accounting project
+
+## Stack
+
+- **backend/** — Django 5, Django Ninja (not DRF), PostgreSQL via Docker, `python-dotenv`, CORS
+- **frontend/** — Vite 6, React 19, TypeScript, Mantine 9
+- **just** — primary task runner at repo root (prefer over ad-hoc scripts)
+
+## Commands
+
+| Goal | Command |
+|------|---------|
+| Setup | `just install` |
+| Local dev | `just dev` (Postgres + migrate + Django + Vite) |
+| Unit tests | `just test` (pytest, sockets disabled) |
+| E2E | `just test-e2e` (Playwright UI) |
+| Migrations | `just migrate` |
+
+Run Python via `backend/.venv/bin/python`. Do not commit `backend/.env` or secrets.
+
+## Change scope
+
+- Minimal diffs; match existing patterns in each area.
+- API changes: Ninja schemas + routes in `backend/config/api.py` (split into routers when it grows).
+- FE API calls: typed clients under `frontend/src/api/` and types in `frontend/src/types/`.

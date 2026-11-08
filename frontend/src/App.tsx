@@ -3,6 +3,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import { AppLayout } from './components/AppLayout';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AccountPage } from './pages/AccountPage';
+import { NominalLedgerCreatePage } from './pages/NominalLedgerCreatePage';
+import { NominalLedgerListPage } from './pages/NominalLedgerListPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -25,6 +27,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AccountPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="nominal-ledger"
+              element={
+                <ProtectedRoute>
+                  <NominalLedgerListPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="nominal-ledger/create"
+              element={
+                <ProtectedRoute>
+                  <NominalLedgerCreatePage />
                 </ProtectedRoute>
               }
             />

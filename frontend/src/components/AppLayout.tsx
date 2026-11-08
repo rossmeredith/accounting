@@ -1,6 +1,29 @@
-import { Box, Container, Group, Text } from '@mantine/core';
+import {
+  Box,
+  Container,
+  Group,
+  Menu,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
+import { IconChevronDown } from '@tabler/icons-react';
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+
+const navLinkStyle = {
+  textDecoration: 'none' as const,
+  color: 'var(--mantine-color-brand-7)',
+  fontWeight: 500,
+};
+
+const navButtonStyle = {
+  ...navLinkStyle,
+  background: 'none',
+  border: 'none',
+  padding: 0,
+  cursor: 'pointer' as const,
+  font: 'inherit' as const,
+};
 
 export function AppLayout() {
   const { user, logout } = useAuth();
@@ -8,8 +31,8 @@ export function AppLayout() {
   return (
     <Box mih="100vh">
       <Box component="header" className="accounting-app-header" py="md">
-        <Container size="sm">
-          <Group justify="space-between">
+        <Container fluid px="lg">
+          <Group justify="space-between" wrap="nowrap">
             <Text
               component={Link}
               to="/"
@@ -23,18 +46,40 @@ export function AppLayout() {
             >
               Accounting
             </Text>
-            <Group gap="md">
+            <Group gap="lg" wrap="nowrap">
               {user ? (
                 <>
                   <Text size="sm" c="dimmed">
                     {user.email}
                   </Text>
+                  <Menu position="bottom-start" withinPortal width="target">
+                    <Menu.Target>
+                      <UnstyledButton
+                        style={navButtonStyle}
+                        aria-label="Nominal ledger menu"
+                      >
+                        <Group gap={4} wrap="nowrap">
+                          <Text span size="sm" c="brand.7" fw={500}>
+                            Nominal ledger
+                          </Text>
+                          <IconChevronDown size={14} stroke={2.5} />
+                        </Group>
+                      </UnstyledButton>
+                    </Menu.Target>
+                    <Menu.Dropdown miw={220}>
+                      <Menu.Item component={Link} to="/nominal-ledger">
+                        List
+                      </Menu.Item>
+                      <Menu.Item component={Link} to="/nominal-ledger/create">
+                        Create
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
                   <Text
                     component={Link}
                     to="/account"
                     size="sm"
-                    c="brand.7"
-                    fw={500}
+                    style={navLinkStyle}
                   >
                     Account
                   </Text>
@@ -42,15 +87,7 @@ export function AppLayout() {
                     component="button"
                     type="button"
                     size="sm"
-                    c="brand.7"
-                    fw={500}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      padding: 0,
-                      cursor: 'pointer',
-                      font: 'inherit',
-                    }}
+                    style={navButtonStyle}
                     onClick={() => {
                       void logout();
                     }}
@@ -64,8 +101,7 @@ export function AppLayout() {
                     component={Link}
                     to="/login"
                     size="sm"
-                    c="brand.7"
-                    fw={500}
+                    style={navLinkStyle}
                   >
                     Sign in
                   </Text>
@@ -73,8 +109,7 @@ export function AppLayout() {
                     component={Link}
                     to="/register"
                     size="sm"
-                    c="brand.7"
-                    fw={500}
+                    style={navLinkStyle}
                   >
                     Register
                   </Text>

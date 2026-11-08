@@ -10,6 +10,12 @@ export type SignUpMockOptions = {
   registerBody?: unknown;
 };
 
+export type MockUser = { id: number; email: string };
+
+export type AppApiMockOptions = SignUpMockOptions & {
+  authUser?: MockUser | null;
+};
+
 async function fulfillJson(
   route: Route,
   status: number,
@@ -24,10 +30,10 @@ async function fulfillJson(
   });
 }
 
-/** Baseline routes for register flow; backend is not used in E2E. */
+/** Baseline routes; backend is not used in E2E. */
 export async function installAppApiMocks(
   page: Page,
-  signUp?: SignUpMockOptions,
+  options: AppApiMockOptions = {},
 ) {
   // Match only HTTP API paths (/api/...), not Vite source modules (/src/api/...).
   await page.route('**/*', async (route) => {
@@ -45,7 +51,11 @@ export async function installAppApiMocks(
     }
 
     if (path === '/api/auth/me' && method === 'GET') {
-      await fulfillJson(route, 401, { detail: 'Unauthorized' });
+      if (options.authUser) {
+        await fulfillJson(route, 200, options.authUser);
+      } else {
+        await fulfillJson(route, 401, { detail: 'Unauthorized' });
+      }
       return;
     }
 
@@ -61,10 +71,10 @@ export async function installAppApiMocks(
 
     if (path === '/api/auth/register' && method === 'POST') {
       const body = route.request().postDataJSON() as RecordedRegister;
-      signUp?.onRegister?.(body);
-      const status = signUp?.registerStatus ?? 201;
+      options.onRegister?.(body);
+      const status = options.registerStatus ?? 201;
       const payload =
-        signUp?.registerBody ??
+        options.registerBody ??
         (status === 201
           ? { id: 42, email: body.email }
           : { detail: 'A user with that email already exists.' });

@@ -1,28 +1,38 @@
-import { useEffect, useState } from 'react';
-import { Button, Container, Stack, Text, Title } from '@mantine/core';
-import { fetchHealth } from './api/client';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { AppLayout } from './components/AppLayout';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { AccountPage } from './pages/AccountPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { HomePage } from './pages/HomePage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 function App() {
-  const [apiStatus, setApiStatus] = useState<string>('…');
-
-  useEffect(() => {
-    fetchHealth()
-      .then((data) => setApiStatus(data.status))
-      .catch(() => setApiStatus('unreachable'));
-  }, []);
-
   return (
-    <Container size="sm" py="xl">
-      <Stack gap="md">
-        <Title order={1}>Accounting</Title>
-        <Text c="dimmed">
-          Django Ninja at <code>/api/</code> · Vite + React (TypeScript) +
-          Mantine
-        </Text>
-        <Text>Backend health: {apiStatus}</Text>
-        <Button>Mantine button</Button>
-      </Stack>
-    </Container>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="reset-password" element={<ResetPasswordPage />} />
+            <Route
+              path="account"
+              element={
+                <ProtectedRoute>
+                  <AccountPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

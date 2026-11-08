@@ -6,7 +6,7 @@ This repo uses **Cursor rules** and a **project skill** for consistent AI assist
 
 | File | Scope |
 |------|--------|
-| `project.mdc` | Always on — monorepo layout, `just` commands |
+| `project.mdc` | Always on — monorepo layout, `just` commands, feature testing (Playwright + paired pytest) |
 | `backend.mdc` | `backend/**/*` — Django Ninja, pytest |
 | `frontend.mdc` | `frontend/**/*.{ts,tsx}` — React, Mantine, Playwright |
 

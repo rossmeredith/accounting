@@ -1,0 +1,10 @@
+{
+  "success": {
+    "email": "sign-up-e2e@example.com",
+    "password": "Str0ngPass!"
+  },
+  "duplicate_email": {
+    "email": "taken@example.com",
+    "password": "Str0ngPass!"
+  }
+}

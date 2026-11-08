@@ -30,3 +30,12 @@ Run Python via `backend/.venv/bin/python`. Do not commit `backend/.env` or secre
 - Minimal diffs; match existing patterns in each area.
 - API changes: Ninja schemas + routes in `backend/config/api.py` (split into routers when it grows).
 - FE API calls: typed clients under `frontend/src/api/` and types in `frontend/src/types/`.
+
+## Feature delivery & testing
+
+A **feature** (user-visible behavior or new API consumed by the UI) is not done without tests:
+
+1. **Playwright** (`frontend/e2e/`) — comprehensive coverage of the new flows (happy paths and important errors). Tests are **black box**: mock the backend (e.g. `page.route` on `/api/**`); do not rely on a live Django server or Postgres for E2E. Assert what the user sees and does only.
+2. **Paired pytest** (`backend/tests/`) — **one pytest per Playwright test**, with a matching name or a shared `test_<flow>__ui` / `test_<flow>__api` prefix. Each pytest sends the **same request payload** the UI would submit (method, path, JSON body, and CSRF/session headers when relevant) to the **real** Django test client and asserts **side effects** (DB rows, `mail.outbox`, session auth, etc.), not merely HTTP status.
+
+Keep request fixtures or inline payloads in sync between the pair so UI contract and backend behavior stay aligned.

@@ -19,15 +19,16 @@ description: >-
 ### New API endpoint
 
 1. Add Ninja `Schema` types and route on `NinjaAPI` in `backend/config/api.py` (or a new router module included from there).
-2. Add pytest in `backend/tests/` using `client.get/post/...` and `@pytest.mark.django_db` if needed.
+2. Add paired pytest in `backend/tests/` using `client.get/post/...` and `@pytest.mark.django_db`; assert side effects for the payloads the UI will send.
 3. Add `frontend/src/types/` + `frontend/src/api/` helper; consume from React components.
 4. Run `just test`.
 
-### New UI screen
+### New UI screen / feature flow
 
 1. Build with Mantine components; keep API access in `src/api/`.
-2. Add Playwright coverage in `frontend/e2e/` when behavior is user-visible.
-3. Run `just test-e2e` (or headless `npm run test:e2e --prefix frontend` in CI).
+2. Add **comprehensive** Playwright specs in `frontend/e2e/`: black box, `/api` mocked via `page.route`, all new paths covered.
+3. Add **one pytest per Playwright test** with the same request payloads against Django; assert DB, email, session, etc.
+4. Run `just test` and `npm run test:e2e --prefix frontend`.
 
 ### Database model change
 
@@ -36,12 +37,13 @@ description: >-
 
 ## Verification checklist
 
-- [ ] `just test` passes (no unintended socket use)
-- [ ] If API or full-stack UI changed: `just test-e2e` or document why E2E was skipped
+- [ ] `just test` passes (no unintended socket use); paired pytest covers payloads + side effects
+- [ ] Playwright E2E passes with **mocked** `/api` (no dependency on live Django for UI tests)
+- [ ] Every new user flow has both an E2E test and its pytest pair
 - [ ] No secrets in committed files
 
 ## Pitfalls
 
 - Do not use DRF — API layer is Django Ninja only.
 - pytest uses `--disable-socket`; tests cannot reach external hosts or Postgres unless explicitly allowed.
-- Playwright E2E needs Docker Postgres (`just test-e2e` runs `db-up` first).
+- Playwright must not be integration-tested against real Django—mock `/api` and keep integration logic in pytest pairs.

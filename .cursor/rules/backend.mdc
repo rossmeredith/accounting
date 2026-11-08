@@ -22,6 +22,8 @@ alwaysApply: false
 - Location: `backend/tests/`.
 - `pytest.ini` sets `--disable-socket`; outbound network must fail unless `@pytest.mark.allow_hosts(...)`.
 - Use `@pytest.mark.django_db` when hitting the DB; use Django test `client` for HTTP.
+- **Paired with Playwright:** for each black-box E2E test, add a pytest that replays the **exact payload** the frontend sends (JSON body, path, verb; include CSRF cookie/header helpers like existing auth tests). Assert **side effects**—model state, `mail.outbox`, session/`/api/auth/me`—not just response JSON.
+- Prefer shared helpers (`_csrf_headers`, factory functions) and names that mirror `frontend/e2e/*.spec.ts` tests.
 
 ## Dependencies
 

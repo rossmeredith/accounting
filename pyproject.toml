@@ -12,3 +12,4 @@ known-first-party = ["config"]
 
 [tool.ruff.lint.per-file-ignores]
 "**/settings*.py" = ["E501"]
+"**/migrations/*.py" = ["E501"]

@@ -21,6 +21,9 @@ alwaysApply: false
 
 - Playwright specs in `frontend/e2e/`; `baseURL` `http://127.0.0.1:5173`.
 - Prefer role/text locators (`getByRole`, `getByText`).
+- **New features:** add specs that cover every new user flow (success + meaningful failures).
+- **Black box / mocked backend:** intercept `/api/**` with `page.route` (or shared `e2e/fixtures/api-mock.ts`). Return deterministic JSON and optionally record outgoing requests. Do not assert against real Django or Postgres in Playwright.
+- **Pairing:** each spec (or `test(...)`) should have a corresponding pytest in `backend/tests/` that uses the same API payloads against Django and checks side effects. Reference the pair in a comment at the top of the spec if names differ.
 
 ## Scripts
 

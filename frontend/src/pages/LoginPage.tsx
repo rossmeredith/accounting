@@ -3,13 +3,14 @@ import {
   Alert,
   Anchor,
   Button,
+  Group,
   PasswordInput,
   Stack,
   TextInput,
-  Title,
 } from '@mantine/core';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ApiError } from '../api/client';
+import { AuthenticationPageShell } from '../components/AuthenticationPageShell';
 import { useAuth } from '../contexts/AuthContext';
 
 export function LoginPage() {
@@ -38,39 +39,51 @@ export function LoginPage() {
   }
 
   return (
-    <Stack gap="md" component="form" onSubmit={handleSubmit}>
-      <Title order={2}>Sign in</Title>
-      {error && (
-        <Alert color="red" title="Could not sign in">
-          {error}
-        </Alert>
-      )}
-      <TextInput
-        label="Email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        required
-      />
-      <PasswordInput
-        label="Password"
-        name="password"
-        autoComplete="current-password"
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
-        required
-      />
-      <Button type="submit" loading={submitting}>
-        Sign in
-      </Button>
-      <Anchor component={Link} to="/forgot-password" size="sm">
-        Forgot password?
-      </Anchor>
-      <Anchor component={Link} to="/register" size="sm">
-        Create an account
-      </Anchor>
-    </Stack>
+    <AuthenticationPageShell
+      title="Welcome back!"
+      subtitle={
+        <>
+          Do not have an account yet?{' '}
+          <Anchor component={Link} to="/register" size="sm">
+            Create account
+          </Anchor>
+        </>
+      }
+    >
+      <Stack gap="md" component="form" onSubmit={handleSubmit}>
+        {error && (
+          <Alert color="red" title="Could not sign in">
+            {error}
+          </Alert>
+        )}
+        <TextInput
+          label="Email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          required
+        />
+        <PasswordInput
+          label="Password"
+          name="password"
+          autoComplete="current-password"
+          placeholder="Your password"
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
+          required
+        />
+        <Group justify="flex-end" mt="xs">
+          <Anchor component={Link} to="/forgot-password" size="sm">
+            Forgot password?
+          </Anchor>
+        </Group>
+        <Button type="submit" fullWidth mt="md" loading={submitting}>
+          Sign in
+        </Button>
+      </Stack>
+    </AuthenticationPageShell>
   );
 }

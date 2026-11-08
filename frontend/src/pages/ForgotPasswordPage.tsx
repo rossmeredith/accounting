@@ -1,16 +1,9 @@
 import { useState, type FormEvent } from 'react';
-import {
-  Alert,
-  Anchor,
-  Button,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-} from '@mantine/core';
+import { Alert, Anchor, Button, Stack, Text, TextInput } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { ApiError } from '../api/client';
 import { requestPasswordReset } from '../api/auth';
+import { AuthenticationPageShell } from '../components/AuthenticationPageShell';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -34,37 +27,46 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <Stack gap="md" component="form" onSubmit={handleSubmit}>
-      <Title order={2}>Forgot password</Title>
-      <Text c="dimmed" size="sm">
-        Enter your email and we&apos;ll send a reset link when an account
-        exists.
-      </Text>
-      {error && (
-        <Alert color="red" title="Request failed">
-          {error}
-        </Alert>
-      )}
-      {message && (
-        <Alert color="green" title="Check your email">
-          {message}
-        </Alert>
-      )}
-      <TextInput
-        label="Email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        required
-      />
-      <Button type="submit" loading={submitting}>
-        Send reset link
-      </Button>
-      <Anchor component={Link} to="/login" size="sm">
-        Back to sign in
-      </Anchor>
-    </Stack>
+    <AuthenticationPageShell
+      title="Forgot password"
+      subtitle={
+        <>
+          Remember your password?{' '}
+          <Anchor component={Link} to="/login" size="sm">
+            Back to sign in
+          </Anchor>
+        </>
+      }
+    >
+      <Stack gap="md" component="form" onSubmit={handleSubmit}>
+        <Text c="dimmed" size="sm">
+          Enter your email and we&apos;ll send a reset link when an account
+          exists.
+        </Text>
+        {error && (
+          <Alert color="red" title="Request failed">
+            {error}
+          </Alert>
+        )}
+        {message && (
+          <Alert color="green" title="Check your email">
+            {message}
+          </Alert>
+        )}
+        <TextInput
+          label="Email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          required
+        />
+        <Button type="submit" fullWidth mt="md" loading={submitting}>
+          Send reset link
+        </Button>
+      </Stack>
+    </AuthenticationPageShell>
   );
 }

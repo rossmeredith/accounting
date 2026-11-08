@@ -9,6 +9,7 @@ import {
 } from '@mantine/core';
 import { ApiError } from '../api/client';
 import { changePassword } from '../api/auth';
+import { AppContentPanel } from '../components/AppContentPanel';
 import { useAuth } from '../contexts/AuthContext';
 
 export function AccountPage() {
@@ -48,53 +49,55 @@ export function AccountPage() {
   }
 
   return (
-    <Stack gap="md">
-      <Title order={2}>Account</Title>
-      {user && (
-        <Text c="dimmed" size="sm">
-          {user.email}
-        </Text>
-      )}
-      <Stack gap="md" component="form" onSubmit={handleSubmit}>
-        <Title order={4}>Change password</Title>
-        {error && (
-          <Alert color="red" title="Update failed">
-            {error}
-          </Alert>
+    <AppContentPanel>
+      <Stack gap="md">
+        <Title order={2}>Account</Title>
+        {user && (
+          <Text c="dimmed" size="sm">
+            {user.email}
+          </Text>
         )}
-        {message && (
-          <Alert color="green" title="Password updated">
-            {message}
-          </Alert>
-        )}
-        <PasswordInput
-          label="Current password"
-          name="current_password"
-          autoComplete="current-password"
-          value={currentPassword}
-          onChange={(e) => setCurrentPassword(e.currentTarget.value)}
-          required
-        />
-        <PasswordInput
-          label="New password"
-          name="new_password"
-          autoComplete="new-password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.currentTarget.value)}
-          required
-        />
-        <PasswordInput
-          label="Confirm new password"
-          name="confirm"
-          autoComplete="new-password"
-          value={confirm}
-          onChange={(e) => setConfirm(e.currentTarget.value)}
-          required
-        />
-        <Button type="submit" loading={submitting}>
-          Update password
-        </Button>
+        <Stack gap="md" component="form" onSubmit={handleSubmit}>
+          <Title order={4}>Change password</Title>
+          {error && (
+            <Alert color="red" title="Update failed">
+              {error}
+            </Alert>
+          )}
+          {message && (
+            <Alert color="green" title="Password updated">
+              {message}
+            </Alert>
+          )}
+          <PasswordInput
+            label="Current password"
+            name="current_password"
+            autoComplete="current-password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.currentTarget.value)}
+            required
+          />
+          <PasswordInput
+            label="New password"
+            name="new_password"
+            autoComplete="new-password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.currentTarget.value)}
+            required
+          />
+          <PasswordInput
+            label="Confirm new password"
+            name="confirm"
+            autoComplete="new-password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.currentTarget.value)}
+            required
+          />
+          <Button type="submit" loading={submitting}>
+            Update password
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </AppContentPanel>
   );
 }

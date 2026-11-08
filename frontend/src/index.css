@@ -1,3 +1,1 @@
-body {
-  margin: 0;
-}
+/* App-wide resets live under each theme namespace (e.g. themes/accounting/global.css). */

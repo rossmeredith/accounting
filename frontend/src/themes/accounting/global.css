@@ -1,0 +1,40 @@
+[data-app-theme='accounting'] {
+  --mantine-radius-default: 0;
+  --mantine-radius-xs: 0;
+  --mantine-radius-sm: 0;
+  --mantine-radius-md: 0;
+  --mantine-radius-lg: 0;
+  --mantine-radius-xl: 0;
+}
+
+[data-app-theme='accounting'][data-mantine-color-scheme='light'] {
+  --accounting-canvas: #fff1e5;
+  --accounting-surface: #ffffff;
+  --accounting-border: #e0d5c8;
+  --accounting-text: #33302e;
+
+  --mantine-color-body: var(--accounting-canvas);
+  --mantine-color-default-border: var(--accounting-border);
+  --mantine-color-text: var(--accounting-text);
+  --mantine-color-dimmed: var(--mantine-color-slate-6);
+  --mantine-color-anchor: var(--mantine-color-brand-6);
+}
+
+[data-app-theme='accounting'] body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-app-theme='accounting'] .accounting-app-header {
+  background-color: var(--accounting-surface);
+  border-bottom: 1px solid var(--accounting-border);
+}
+
+[data-app-theme='accounting'] .tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--mantine-font-family-monospace);
+}

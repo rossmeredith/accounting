@@ -6,10 +6,10 @@ import {
   PasswordInput,
   Stack,
   TextInput,
-  Title,
 } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { ApiError } from '../api/client';
+import { AuthenticationPageShell } from '../components/AuthenticationPageShell';
 import { useAuth } from '../contexts/AuthContext';
 
 export function RegisterPage() {
@@ -36,36 +36,46 @@ export function RegisterPage() {
   }
 
   return (
-    <Stack gap="md" component="form" onSubmit={handleSubmit}>
-      <Title order={2}>Register</Title>
-      {error && (
-        <Alert color="red" title="Could not register">
-          {error}
-        </Alert>
-      )}
-      <TextInput
-        label="Email"
-        name="email"
-        type="email"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
-        required
-      />
-      <PasswordInput
-        label="Password"
-        name="password"
-        autoComplete="new-password"
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
-        required
-      />
-      <Button type="submit" loading={submitting}>
-        Create account
-      </Button>
-      <Anchor component={Link} to="/login" size="sm">
-        Already have an account? Sign in
-      </Anchor>
-    </Stack>
+    <AuthenticationPageShell
+      title="Create an account"
+      subtitle={
+        <>
+          Already have an account?{' '}
+          <Anchor component={Link} to="/login" size="sm">
+            Sign in
+          </Anchor>
+        </>
+      }
+    >
+      <Stack gap="md" component="form" onSubmit={handleSubmit}>
+        {error && (
+          <Alert color="red" title="Could not register">
+            {error}
+          </Alert>
+        )}
+        <TextInput
+          label="Email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          required
+        />
+        <PasswordInput
+          label="Password"
+          name="password"
+          autoComplete="new-password"
+          placeholder="Choose a password"
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
+          required
+        />
+        <Button type="submit" fullWidth mt="md" loading={submitting}>
+          Create account
+        </Button>
+      </Stack>
+    </AuthenticationPageShell>
   );
 }

@@ -9,6 +9,7 @@ alwaysApply: false
 ## UI
 
 - **Mantine** for components; global styles via `@mantine/core/styles.css` and `MantineProvider` in `main.tsx`.
+- **Themes:** scoped packages under `frontend/src/themes/<id>/` (active id from `themes/index.ts` → `defaultThemeId`). Each package exports a `ThemePackage` (Mantine `createTheme`, fonts, `global.css`, `data-app-theme` on `<html>`).
 - PostCSS: `postcss-preset-mantine` in `postcss.config.cjs`.
 
 ## Data & types

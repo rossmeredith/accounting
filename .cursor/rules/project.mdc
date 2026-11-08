@@ -23,6 +23,8 @@ alwaysApply: true
 
 Run Python via `backend/.venv/bin/python`. Do not commit `backend/.env` or secrets.
 
+**Format:** `just fmt` (Ruff on `backend/`, Prettier on `frontend/`). pre-commit hooks enforce the same on commit.
+
 ## Change scope
 
 - Minimal diffs; match existing patterns in each area.

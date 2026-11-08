@@ -9,6 +9,17 @@ install:
     backend/.venv/bin/pip install -r backend/requirements-dev.txt
     npm install --prefix frontend
     npm exec --prefix frontend -- playwright install chromium
+    backend/.venv/bin/pre-commit install
+
+fmt:
+    backend/.venv/bin/ruff format backend
+    backend/.venv/bin/ruff check --fix backend
+    npm run format --prefix frontend
+
+fmt-check:
+    backend/.venv/bin/ruff format --check backend
+    backend/.venv/bin/ruff check backend
+    npm run format:check --prefix frontend
 
 test:
     backend/.venv/bin/pytest backend

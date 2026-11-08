@@ -16,7 +16,8 @@ function App() {
       <Stack gap="md">
         <Title order={1}>Accounting</Title>
         <Text c="dimmed">
-          Django Ninja at <code>/api/</code> · Vite + React (TypeScript) + Mantine
+          Django Ninja at <code>/api/</code> · Vite + React (TypeScript) +
+          Mantine
         </Text>
         <Text>Backend health: {apiStatus}</Text>
         <Button>Mantine button</Button>

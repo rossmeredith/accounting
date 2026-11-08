@@ -1,22 +1,80 @@
 # Python
 __pycache__/
 *.py[cod]
-*.sqlite3
-backend/.venv/
-backend/.env
+*$py.class
+*.so
+.Python
 *.egg-info/
 .eggs/
+*.egg
+build/
+develop-eggs/
+dist/
+downloads/
+wheels/
+share/python-wheels/
+backend/.venv/
+.venv/
+venv/
+ENV/
 
-# Node
+# Python tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Django / DB
+*.sqlite3
+backend/db.sqlite3
+
+# Secrets & local env
+**/.env
+!**/.env.example
+
+# Node (frontend)
 frontend/node_modules/
 frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+.eslintcache
+
+# Playwright
 frontend/test-results/
 frontend/playwright-report/
 frontend/blob-report/
 frontend/playwright/.cache/
 
+# Docker (local overrides only)
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
 # IDE / OS
 .DS_Store
+Thumbs.db
 .idea/
 .vscode/
-*.log
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Editor swap
+*~
+*.swp
+*.swo

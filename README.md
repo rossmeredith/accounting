@@ -34,7 +34,11 @@ Stop the database container: `just db-down`
 | `just migrate` | Run Django migrations |
 | `just test` | pytest (sockets disabled; no Docker required) |
 | `just test-e2e` | Playwright UI (Postgres + Django + Vite) |
+| `just fmt` | Ruff + Prettier (write) |
+| `just fmt-check` | Ruff + Prettier (check only) |
 | `just --list` | All recipes |
+
+**Formatting** — Backend: [Ruff](https://docs.astral.sh/ruff/) (`format` + `lint`). Frontend: [Prettier](https://prettier.io/) (ESLint uses `eslint-config-prettier`). **pre-commit** runs on `git commit` after `just install`.
 
 ### Testing
 
